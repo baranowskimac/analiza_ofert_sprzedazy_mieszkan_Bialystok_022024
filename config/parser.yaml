@@ -1,0 +1,99 @@
+olx_a_class: "css-lsw81o e1dfeild2"
+url_root: "https://www.otodom.pl"
+url_core: "/pl/wyniki/{offer_type}/{apartment_type}/{region}"
+url_query_suffix: "?limit={page_limit}&ownerTypeSingleSelect=ALL&priceMin={price_min}&priceMax={price_max}&by=DEFAULT&direction=DESC&viewType=listing&page={page_number}"
+extract_attributes:
+  "ad_id":
+    - "id"
+  "lang":
+    - "lang"
+  "relativeUrl":
+    - "url"
+  "ad_id2":
+    - "ad"
+    - "id"
+  "public_id":
+    - "ad"
+    - "publicId"
+  "market":
+    - "ad"
+    - "market"
+  "advertiser_type":
+    - "ad"
+    - "advertiserType"
+  "title":
+    - "ad"
+    - "title"
+  # "description":
+  #   - "ad"
+  #   - "description"
+  "full_url":
+    - "ad"
+    - "url"
+  "slug":
+    - "ad"
+    - "slug"
+  "created_at":
+    - "ad"
+    - "createdAt"
+  "modified_at":
+    - "ad"
+    - "modifiedAt"
+  "market_type":
+    - "ad"
+    - "target"
+    - "MarketType"
+  "price_range":
+    - "ad"
+    - "target"
+    - "PriceRange"
+  "country":
+    - "ad"
+    - "target"
+    - "Country"
+  "city":
+    - "ad"
+    - "target"
+    - "City"
+  "city_id":
+    - "ad"
+    - "target"
+    - "City_id"
+  "latitude":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "latitude"
+  "latitude":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "latitude"
+  "longitude":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "longitude"
+  "longitude":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "longitude"
+  "district_id":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "district.id"
+  "district_code":
+    - "ad"
+    - "location"
+    - "coordinates"
+    - "district.code"
+characteristics:
+  - "price"
+  - "m"
+  - "price_per_m"
+  - "rooms_num"
+  - "heating"
+  - "building_ownership"
+  - "floor_no"

@@ -1,11 +1,11 @@
 import json
 from typing import List
-from datetime import date
-from multiprocessing import Pool
 
-import pandas as pd
 import requests
+import pandas as pd
 from bs4 import BeautifulSoup
+
+from config import get_parser_config
 
 
 class OtodomDataScraper:
@@ -41,14 +41,12 @@ class OtodomDataScraper:
         sys_sleeping (int): System sleeping between loops. In seconds
     """
 
-    URL_ROOT = "https://www.otodom.pl"
-    OLX_A_CLASS = "css-lsw81o e1dfeild2"
-
     def __init__(
         self,
         page_limit: int = 25,
     ):
         self.page_limit = page_limit
+        self.config = get_parser_config()
 
     def download_data(
         self,
@@ -119,8 +117,8 @@ class OtodomDataScraper:
         soup = self._url_to_soup(url)
 
         page_urls = []
-        for a in soup.find_all("a", {"class": self.OLX_A_CLASS}, href=True):
-            page_urls.append(self.URL_ROOT + a["href"])
+        for a in soup.find_all("a", {"class": self.config.olx_a_class}, href=True):
+            page_urls.append(self.config.url_root + a["href"])
 
         return page_urls
 
@@ -134,63 +132,26 @@ class OtodomDataScraper:
         page_number: int,
         page_limit: int,
     ) -> str:
-        URL_CORE = "/pl/wyniki/{offer_type}/{apartment_type}/{region}"
-        URL_QUERY_SUFFIX = "?limit={page_limit}&ownerTypeSingleSelect=ALL&priceMin={price_min}&priceMax={price_max}&by=DEFAULT&direction=DESC&viewType=listing&page={page_number}"
-
-        url_core = URL_CORE.format(
+        url_core = self.config.url_core.format(
             offer_type=offer_type,
             apartment_type=apartment_type,
             region=region,
         )
-        url_suffix = URL_QUERY_SUFFIX.format(
+        url_suffix = self.config.url_query_suffix.format(
             price_min=price_min,
             price_max=price_max,
             page_limit=page_limit,
             page_number=page_number,
         )
-        return self.URL_ROOT + url_core + url_suffix
+        return self.config.url_root + url_core + url_suffix
 
     def parse_offer(self, url) -> dict:
         """Extracts selected attributes from OLX offer under given url."""
-        EXTRACT_ATTRIBUTES = {
-            ("id",): "ad_id",
-            ("lang",): "lang",
-            ("relativeUrl",): "url",
-            ("ad", "id"): "ad_id2",
-            ("ad", "publicId"): "public_id",
-            ("ad", "market"): "market",
-            ("ad", "advertiserType"): "advertiser_type",
-            ("ad", "title"): "title",
-            # ("ad", "description"): "description",
-            ("ad", "url"): "full_url",
-            ("ad", "slug"): "slug",
-            ("ad", "createdAt"): "created_at",
-            ("ad", "modifiedAt"): "modified_at",
-            ("ad", "target", "MarketType"): "market_type",
-            ("ad", "target", "PriceRange"): "price_range",
-            ("ad", "target", "Country"): "country",
-            ("ad", "target", "City"): "city",
-            ("ad", "target", "City_id"): "city_id",
-            ("ad", "location", "coordinates", "latitude"): "latitude",
-            ("ad", "location", "coordinates", "longitude"): "longitude",
-            ("ad", "location", "coordinates", "district.id"): "district_id",
-            ("ad", "location", "coordinates", "district.code"): "district_code",
-        }
-        EXTRACT_CHARACTERISTICS = [
-            "price",
-            "m",
-            "price_per_m",
-            "rooms_num",
-            "heating",
-            "building_ownership",
-            "floor_no",
-        ]
-
         offer_json = self._offer_url_to_json(url)
 
         # extract raw attributes
         offer_parsed = {}
-        for attr_path, attr_name in EXTRACT_ATTRIBUTES.items():
+        for attr_name, attr_path in self.config.extract_attributes.items():
             attr_val = offer_json
             for attr_path_step in attr_path:
                 attr_val = attr_val.get(attr_path_step, {})
@@ -201,7 +162,7 @@ class OtodomDataScraper:
         offer_characteristics = {
             c["key"]: c["value"]
             for c in char_map
-            if c["key"] in EXTRACT_CHARACTERISTICS
+            if c["key"] in self.config.characteristics
         }
         offer_parsed.update(offer_characteristics)
 
