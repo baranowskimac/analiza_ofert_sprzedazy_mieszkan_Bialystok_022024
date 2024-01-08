@@ -1,0 +1,5 @@
+offer_type: "sprzedaz"
+apartment_type: "mieszkanie"
+region: "malopolskie"
+price_min: 50000
+price_max: 100000

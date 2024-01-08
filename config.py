@@ -1,14 +1,15 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from typing import List
 import yaml
 
 
-CONFIG_PATH = "./config/parser.yaml"
+SCRAPER_PATH = "./config/scraper.yaml"
+QUERY_PATH = "./config/query.yaml"
 
 
 @dataclass
-class ParserConfig:
-    olx_a_class: str
+class ScraperConfig:
+    a_class: str
     url_root: str
     url_core: str
     url_query_suffix: str
@@ -16,7 +17,25 @@ class ParserConfig:
     characteristics: List[str]
 
 
-def get_parser_config() -> ParserConfig:
-    with open(CONFIG_PATH, "r") as file:
+@dataclass
+class QueryConfig:
+    offer_type: str
+    apartment_type: str
+    region: str
+    price_min: int
+    price_max: int
+
+    def to_dict(self):
+        return asdict(self)
+
+
+def get_scraper_config() -> ScraperConfig:
+    with open(SCRAPER_PATH, "r") as file:
         yaml_content = file.read()
-        return ParserConfig(**yaml.safe_load(yaml_content))
+        return ScraperConfig(**yaml.safe_load(yaml_content))
+
+
+def get_query_config() -> ScraperConfig:
+    with open(QUERY_PATH, "r") as file:
+        yaml_content = file.read()
+        return QueryConfig(**yaml.safe_load(yaml_content))

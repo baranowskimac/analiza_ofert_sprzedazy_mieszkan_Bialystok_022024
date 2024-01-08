@@ -5,7 +5,7 @@ import requests
 import pandas as pd
 from bs4 import BeautifulSoup
 
-from config import get_parser_config
+from config import get_scraper_config
 
 
 class OtodomDataScraper:
@@ -46,7 +46,7 @@ class OtodomDataScraper:
         page_limit: int = 25,
     ):
         self.page_limit = page_limit
-        self.config = get_parser_config()
+        self.config = get_scraper_config()
 
     def download_data(
         self,
@@ -117,7 +117,7 @@ class OtodomDataScraper:
         soup = self._url_to_soup(url)
 
         page_urls = []
-        for a in soup.find_all("a", {"class": self.config.olx_a_class}, href=True):
+        for a in soup.find_all("a", {"class": self.config.a_class}, href=True):
             page_urls.append(self.config.url_root + a["href"])
 
         return page_urls

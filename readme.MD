@@ -10,8 +10,12 @@ Kod przygotowany na zaliczenie studiów podyplomowych.
     ```
 
 2. Wykonanie zapytania:
-    ```bash
-    python main.py
-    ```
+    -  Uzupełnij warunki zapytania w pliku konfiguracyjnym: `./config/scraper.yaml`
+
+
+    - uruchom skrypt
+        ```bash
+        python main.py
+        ```
 3. Wyniki
     Odkładają się w folderze `./data/`

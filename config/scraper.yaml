@@ -1,4 +1,4 @@
-olx_a_class: "css-lsw81o e1dfeild2"
+a_class: "css-lsw81o e1dfeild2"
 url_root: "https://www.otodom.pl"
 url_core: "/pl/wyniki/{offer_type}/{apartment_type}/{region}"
 url_query_suffix: "?limit={page_limit}&ownerTypeSingleSelect=ALL&priceMin={price_min}&priceMax={price_max}&by=DEFAULT&direction=DESC&viewType=listing&page={page_number}"
