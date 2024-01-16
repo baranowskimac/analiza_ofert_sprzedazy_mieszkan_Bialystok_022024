@@ -223,37 +223,37 @@ class scrape_otodom_data:
                 add_details_df["full_url"] = 'None'
 
             try:
-                add_details_df["price"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'price'")['value']
+                add_details_df["price"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'price'").reset_index()['value']
             except KeyError:
                 add_details_df["price"] = 'None'
 
             try:
-                add_details_df["m"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'm'")['value']
+                add_details_df["m"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'm'").reset_index()['value']
             except KeyError:
                 add_details_df["m"] = 'None'
 
             try:
-                add_details_df["price_per_m"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'price_per_m'")['value']
+                add_details_df["price_per_m"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'price_per_m'").reset_index()['value']
             except KeyError:
                 add_details_df["price_per_m"] = 'None'
 
             try:
-                add_details_df["rooms_num"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'rooms_num'")['value']
+                add_details_df["rooms_num"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'rooms_num'").reset_index()['value']
             except KeyError:
                 add_details_df["rooms_num"] = 'None'
 
             try:
-                add_details_df["floor_no"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("label == 'Piętro'")['localizedValue']
+                add_details_df["floor_no"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("label == 'Piętro'").reset_index()['localizedValue']
             except KeyError:
                 add_details_df["floor_no"] = 'None'
 
             try:
-                add_details_df["heating"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'heating'")['value']
+                add_details_df["heating"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'heating'").reset_index()['value']
             except KeyError:
                 add_details_df["heating"] = 'None'
 
             try:
-                add_details_df["building_ownership"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'building_ownership'")['value']
+                add_details_df["building_ownership"] = pd.json_normalize(json_data['props']['pageProps']['ad']['characteristics']).query("key == 'building_ownership'").reset_index()['value']
             except KeyError:
                 add_details_df["building_ownership"] = 'None'
 
@@ -320,6 +320,7 @@ class scrape_otodom_data:
         full_df_ads_data_details = []
         full_ds = []
         date_of_download = date.today()
+        limit_ads_one_page = int(self.limit)
 
         running = True
         page_counter = 1
@@ -335,8 +336,6 @@ class scrape_otodom_data:
             #  step 1 - create a main link for downloading data
             next_link_to_download = scrape_otodom_data.create_link_page_to_download(self, page_counter = page_counter)
 
-            print(next_link_to_download)
-
             # step 2 - scrap page for downloading data
 
             next_soup_page = scrape_otodom_data.define_page_to_extract(self, page_url = next_link_to_download)
@@ -344,6 +343,9 @@ class scrape_otodom_data:
             # step 3 - find all links (ads) on the scrapped pag
 
             next_list_of_ads_links = scrape_otodom_data.create_list_of_ulrs(self, soup = next_soup_page)
+
+            print(next_link_to_download, '/ads to download: ', len(next_list_of_ads_links))
+            ads_to_download_in_page = len(next_list_of_ads_links)
 
             # step 4 - extract all details from found ads on the page
             try:
@@ -357,7 +359,11 @@ class scrape_otodom_data:
 
             page_counter += 1
 
-        full_df_ads_data_details = full_df_ads_data_details[ : -1]
+            if ads_to_download_in_page < limit_ads_one_page:
+                print('No More Data = stop downloading data')
+                break
+
+        # full_df_ads_data_details = full_df_ads_data_details[ : -1]
         full_ds = pd.concat(full_df_ads_data_details, axis=0)
 
         full_ds.to_csv(f'{self.path_to_save_full_files}/full_oto_dom_data_{date_of_download}.csv')
