@@ -50,7 +50,7 @@ class scrape_otodom_data:
             price_min = None, 
             price_max = None, 
             path_to_save_batch_files = None, 
-            path_to_save_full_files = None, ):
+            path_to_save_full_files = None):
         
         self.sprzedaz = sprzedaz
         self.apartament_type=apartament_type

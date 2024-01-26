@@ -1,0 +1,10 @@
+main_page: "https://www.otodom.pl/pl/wyniki"
+offer_type: "sprzedaz"
+apartament_type: "mieszkanie"
+region: "podlaskie"
+price_min:  400000 
+price_max: 420000
+limit: 24 
+sys_sleep: 1
+
+
