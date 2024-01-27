@@ -37,6 +37,6 @@ def extract_to_df(oto_data: list):
     for i in range(len(oto_data)):
         one_df = pd.DataFrame.from_dict(oto_data[i], orient='columns')
         return_df.append(one_df)
-    return_df = pd.concat(return_df)
+    return_df = pd.concat(return_df).reset_index()
     return return_df
 
