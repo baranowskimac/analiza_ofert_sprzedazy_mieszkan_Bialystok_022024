@@ -1,5 +1,4 @@
 import json
-from bs4 import BeautifulSoup
 
 def extract_ad_json(add_soup, scraper_config: dict):
     add_soup.find_all("div", {"class": scraper_config['ad_css_class'][0]})

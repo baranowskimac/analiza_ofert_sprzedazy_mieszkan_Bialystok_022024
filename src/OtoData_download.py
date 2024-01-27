@@ -1,12 +1,6 @@
-import yaml
-from src.otoDom_scraper import *
-from src.save_OtoData import create_save_data_path, save_file
+from src.OtoData_scraper import *
+from src.OtoData_rs import *
 
-
-def read_config(config_path: str):
-    with open(config_path, "r") as file:
-        yaml_content = yaml.safe_load(file)
-    return yaml_content
 
 def download_Oto_Data(
         query_ad_params_path: str,

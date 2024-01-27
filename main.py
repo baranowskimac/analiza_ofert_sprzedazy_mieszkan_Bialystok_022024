@@ -1,7 +1,7 @@
-from src.download_OtoData import *
-from src.extract_ad_data import *
-from src.otoDom_scraper import *
-from src.save_OtoData import create_save_data_path, save_file
+from src.OtoData_download import *
+from src.OtoData_extract import *
+from src.OtoData_scraper import *
+from src.OtoData_rs import *
 
 
 if __name__ == "__main__":
@@ -14,7 +14,10 @@ if __name__ == "__main__":
         page_counter = 1
     )
 
+    print('preparing data')
+    return_df = extract_to_df(oto_dom_data)
+
     print('saving data')
     path_to_save_file = create_save_data_path(batch = False)
-    save_file(oto_dom_data, path_to_save_file)
+    save_file(oto_file = return_df, oto_path = path_to_save_file)
 

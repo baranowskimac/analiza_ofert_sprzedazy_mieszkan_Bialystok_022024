@@ -1,10 +1,12 @@
 main_page: "https://www.otodom.pl/pl/wyniki"
 offer_type: "sprzedaz"
 apartament_type: "mieszkanie"
-region: "podlaskie"
-price_min:  400000 
-price_max: 420000
-limit: 24 
+region: podlaskie
+city: bialystok
+distance_radius: 10 
+price_min: 100000 
+price_max: 350000
+limit: 36 
 sys_sleep: 1
 
 
