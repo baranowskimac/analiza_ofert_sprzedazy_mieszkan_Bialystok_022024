@@ -19,27 +19,31 @@ def download_Oto_Data(
         list: list with data about ads from Oto Dom service.
             One list element is one page with ads (specific ads in dict)
     """
+    # read ad & scrape params from configs
     ad_params = read_config(query_ad_params_path)
     scrape_params = read_config(scrape_params_path)
     limit_ads_one_page = ad_params['limit']
      
     full_ds = []
-
+    # page counter for changing url - if is more than one page of ads for scrape
     page_counter = 1
-
+    # while loop - works as as long as the number of ads on the page is less than the minimum required defined in the config
     while True:
+    # return also n_url for checking how many ads it is on one page
         ads_data, n_urls = download_data(
              query_params = ad_params, 
              scrape_params = scrape_params, 
              page_counter=page_counter)
         
         path_to_save = create_save_data_path(batch = True)
-        save_file(ads_data, path_to_save)
+        # sve batch files
+        save_file(ads_data, path_to_save) 
         
         full_ds.append(ads_data)
         
         page_counter += 1
-        
+        # if n of urls is less than min defined ads in config - break a code. 
+        # Means that there is no more ads for scrape!
         if n_urls < limit_ads_one_page:
             print('No More Data = stop downloading data')
             break

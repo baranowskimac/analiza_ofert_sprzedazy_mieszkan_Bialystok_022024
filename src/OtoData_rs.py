@@ -35,6 +35,7 @@ def create_save_data_path(batch: bool) -> str:
     tz = datetime.now(timezone.utc)
     tz_str = tz.strftime("%Y%m%d_%H%M%S")
 
+    # check if arg of function is True/False.if True create batch dir and save file as batch file
     if batch == True:
         path = os.path.join(os.getcwd(), 'batch') 
         if not os.path.exists(path):
@@ -79,7 +80,8 @@ def extract_to_df(oto_data: list) -> pd.DataFrame:
     Returns:
         pd.DataFrame: readable data frame with data from oto dom service
     """
-    
+    # returning df of oto dome scraping is list of list of dict
+    # function provide a human readable df - iterate bye elements of list and concat dictionaries in one df
     return_df = []
     for i in range(len(oto_data)):
         one_df = pd.DataFrame.from_dict(oto_data[i], orient='columns')

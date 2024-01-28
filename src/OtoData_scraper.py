@@ -57,6 +57,8 @@ def extract_html_page(page_url: str):
     """
     # parser data from created link
     page = requests.get(page_url)
+    # if status is 404 it means that ads params probably are wrong 
+    # remember collecting data up to the city level with county law
     if page.status_code == 404:
         print(page)
         raise ValueError("Page dosn't exist. Check params!")
@@ -83,10 +85,14 @@ def download_data(
             - checking if list of urls is shorter than minimum ads on page
 
     """
-
+    # 1st step - create a main page for download  - params of looked apartaments given in config file
     main_page_url = create_link_page_to_download(query_params, page_counter)
+    # 2nd step - extrat page for scraping using beautiful soup package
     page_html = extract_html_page(main_page_url)
+    # 3rd step - create list of url of ads for scraping
     urls = create_list_of_ulrs(page_html, scrape_params)
+    # 3a - check how many ads is for scraping. If number of ads is less than minimum defined value in one page
+    # scraper should download only one page of ads
     n_urls = len(urls)
 
     print(f'n_ads: {n_urls} ,: {main_page_url}')
@@ -94,11 +100,21 @@ def download_data(
     full_ads_data = []
 
     for i in urls:
-        one_ad_page = create_ad_page_to_extract(i)
+        #prepare url of on ad for extracting data
+        one_ad_page = create_ad_page_to_extract(i) 
         print(one_ad_page)
-        one_ad_hmlt_extract = extract_html_page(one_ad_page)
-        json_ad = extract_ad_json(add_soup = one_ad_hmlt_extract, scraper_config = scrape_params)
-        one_add_data = full_ad_details(json_data = json_ad, scraper_config = scrape_params)
+        # using bs package - extract page
+        one_ad_hmlt_extract = extract_html_page(one_ad_page) 
+        # extract ads details from json in page
+        json_ad = extract_ad_json(
+            add_soup = one_ad_hmlt_extract, 
+            scraper_config = scrape_params
+        )
+        # extract ad details defined in scraper config
+        one_add_data = full_ad_details(
+            json_data = json_ad, 
+            scraper_config = scrape_params
+        )
         full_ads_data.append(one_add_data)
         time.sleep(query_params['sys_sleep'])
 
