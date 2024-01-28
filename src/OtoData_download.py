@@ -1,18 +1,23 @@
 from src.OtoData_scraper import *
 from src.OtoData_rs import *
 
-
 def download_Oto_Data(
         query_ad_params_path: str,
         scrape_params_path: str,
         page_counter = 1
-        ):
+) -> list:
     
     """
-        function for downloading data from Oto Dom Service
+    Function for downloading data from Oto Dom Service
 
-        Returns:
-            pd.DataFrame: Data Frame with data about ads from Oto Dom service
+    Args:
+        query_params (dict): dictionary with params for looking for oto dom ads for scraping
+        scrape_params_path (dict): dictionary with specific scrape params from a oto dom page
+        page_counter (int): value of the next page (if there one than 1 page with ads)
+
+    Returns:
+        list: list with data about ads from Oto Dom service.
+            One list element is one page with ads (specific ads in dict)
     """
     ad_params = read_config(query_ad_params_path)
     scrape_params = read_config(scrape_params_path)

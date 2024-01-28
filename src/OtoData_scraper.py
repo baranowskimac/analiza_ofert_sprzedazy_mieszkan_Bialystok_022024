@@ -2,15 +2,29 @@ from bs4 import BeautifulSoup
 import requests
 import time
 import time
+from typing import Union
 from src.OtoData_extract import *
 from src.OtoData_buildURL import *
 
-def create_ad_page_to_extract(one_url):
+def create_ad_page_to_extract(one_url: str) -> str:
+
+    """
+    Function for prepare an url for data extract
+    
+    Args:
+        one_url (str): bs4.BeautifulSoup object
+    
+    Returns:
+        str: url ready for scraping data
+
+    """
+
     one_add_page = f'https://www.otodom.pl{one_url}'
     return one_add_page
 
 
 def create_list_of_ulrs(soup, scrape_params: dict) -> list:
+    
     """
     Function to extract ftom Oto Dom page links to download data from particular ads
     
@@ -30,8 +44,8 @@ def create_list_of_ulrs(soup, scrape_params: dict) -> list:
         
     return list_of_url
 
-
 def extract_html_page(page_url: str):
+   
     """
     Function to extract all ads from a given page from OtoDom webservice
     Args:
@@ -49,10 +63,28 @@ def extract_html_page(page_url: str):
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
-def download_data(query_params: dict, scrape_params: dict, page_counter: int):
+def download_data(
+        query_params: dict, 
+        scrape_params: dict, 
+        page_counter: int
+) -> Union[list, int]:
+    
+    """
+    Function for downloading data from Oto Dom service
+    
+    Args:
+        query_params (dict):dictionary with params for looking for oto dom ads for scraping
+        scraper_config (dict): dictionary with specific scrape params from a oto dom page
+        page_counter (int): value of the next page 
+    
+    Returns:
+        list: bs4.BeautifulSoup object for future downloading data
+        int: number of urls for download data 
+            - checking if list of urls is shorter than minimum ads on page
+
+    """
 
     main_page_url = create_link_page_to_download(query_params, page_counter)
-    
     page_html = extract_html_page(main_page_url)
     urls = create_list_of_ulrs(page_html, scrape_params)
     n_urls = len(urls)
