@@ -45,13 +45,13 @@ Kod przygotowany na zaliczenie studiów podyplomowych.
             (jeżeli nie zostanie wypełnione wynikiem działania programu będzie Error 404)
         - nazwy województw/miast wpisujemy bez polskich znaków  
     2. Argumenty
-        - region:
+        - region:  
             Województwo polskie. Możliwe wartości:
             dolnoslaskie/kujawsko--pomorskie/lodzkie/lubelskie/lubuskie/malopolskie/mazowieckie/opolskie/podkarpackie/
             podlaskie/pomorskie/slaskie/swietokrzyskie/warminsko--mazurskie
-        - city:
+        - city:  
             Nazwa miasta do przeszukiwania ofert. najniższy poziom miast do poszukiwań to miasta na prawach powiatu
-        - distance_radius:
+        - distance_radius:  
             promień (w km) wogół miasta w którym poszukiwane będą również oferty.
             UWAGA: działą tylko w sytuacji gdy zostanie podane miasto. W innym przypadku argument powinien zostać pusty
 3. Argumenty ceny
