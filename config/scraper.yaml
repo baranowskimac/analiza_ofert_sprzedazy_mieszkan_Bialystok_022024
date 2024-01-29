@@ -1,0 +1,84 @@
+ad_css_class:
+  - "css-m97llu e16xl7020"
+
+urls_class:
+  - "css-lsw81o e1dfeild1"
+
+# path ad: None
+general_ad_attr:
+  - "lang"
+  - "id"
+  - "relativeUrl"
+
+# path to atr ['ad']
+ad_attr:
+  - "id"
+  - "publicId"
+  - "market"
+  - "advertiserType"
+  - "title"
+  - "description"
+  - "url"
+  - "slug"
+  - "createdAt"
+  - "modifiedAt"
+  - "features"
+
+# path to attr: ['ad']['target']
+ad_targets_attr:
+  - "MarketType"
+  - "Area"
+  - "AreaRange"
+  - "Build_year"
+  - "Building_floors_num"
+  - "Country"
+  - "City"
+  - "City_id"
+  - "Construction_status"
+  - "Extras_types"
+  - "Floor_no"
+  - "ProperType"
+  - "Province"
+  - "Rooms_num"
+  - "Security_types"
+  - "Price"
+  - "PriceRange"
+  - "Price_per_m"
+  - "hidePrice"
+
+# path to attr: ['ad']['location']['coordinates']
+geo_attr:
+  - "latitude"
+  - "longitude"
+
+# path to attr: ['ad']['location']['address']
+address_attr:
+  - "street"
+  - "district"
+  - "city"
+  - "province"
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
