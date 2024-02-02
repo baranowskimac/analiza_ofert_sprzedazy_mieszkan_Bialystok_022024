@@ -59,6 +59,8 @@ Kod przygotowany na zaliczenie studiów podyplomowych.
     - W przypadku price_min pozostawienie pola pustego - oferty będą przeszukiwane od 0 zł
     - W przypadku price_max pozostawienie pola pustego - brak górnego pułapu cenowego przeszukiwanych ofert
 4. Ustawienia systemowe
+    - page_num:
+        numeracja stron do pobierania (jeżeli liczba reklam przekracza jedną stronę) - od której strony zaczynać pobieranie
     - limit:  
         limit liczby reklam na jednej stronie. Możliwe wartości: 24/36/48/72
     - sys_sleep:  
