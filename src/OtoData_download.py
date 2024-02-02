@@ -3,8 +3,7 @@ from src.OtoData_rs import *
 
 def download_Oto_Data(
         query_ad_params_path: str,
-        scrape_params_path: str,
-        page_counter = 1
+        scrape_params_path: str
 ) -> list:
     
     """
@@ -26,7 +25,7 @@ def download_Oto_Data(
      
     full_ds = []
     # page counter for changing url - if is more than one page of ads for scrape
-    page_counter = 1
+    page_counter = ad_params['page_num']
     # while loop - works as as long as the number of ads on the page is less than the minimum required defined in the config
     while True:
     # return also n_url for checking how many ads it is on one page
