@@ -14,7 +14,7 @@ def regional_params(
     return {
         'country': "cala-polska?",
         'region': f"{query_params['region']}?",
-        'city': f"{query_params['region']}/{query_params['city']}/{query_params['city']}/{query_params['city']}?distanceRadius={query_params['distance_radius']}?"
+        'city': f"{query_params['region']}/{query_params['city']}/{query_params['city']}/{query_params['city']}?distanceRadius={query_params['distance_radius']}&"
     }.get(reg) 
 
 def build_regional_url(query_params: dict) -> str:
