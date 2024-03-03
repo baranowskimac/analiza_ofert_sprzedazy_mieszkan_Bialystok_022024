@@ -10,7 +10,8 @@ if __name__ == "__main__":
 
     oto_dom_data = download_Oto_Data(
         query_ad_params_path = './config/query_params.yaml',
-        scrape_params_path = './config/scraper.yaml'
+        scrape_params_path = './config/scraper.yaml',
+        headers_params_path = './config/headers.yaml'
     )
 
     print('preparing data')

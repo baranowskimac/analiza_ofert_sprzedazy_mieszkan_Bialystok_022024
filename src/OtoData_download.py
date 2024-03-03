@@ -3,7 +3,8 @@ from src.OtoData_rs import *
 
 def download_Oto_Data(
         query_ad_params_path: str,
-        scrape_params_path: str
+        scrape_params_path: str,
+        headers_params_path: str
 ) -> list:
     
     """
@@ -21,6 +22,7 @@ def download_Oto_Data(
     # read ad & scrape params from configs
     ad_params = read_config(query_ad_params_path)
     scrape_params = read_config(scrape_params_path)
+    headers_params = read_config(headers_params_path)
     limit_ads_one_page = ad_params['limit']
      
     full_ds = []
@@ -31,7 +33,8 @@ def download_Oto_Data(
     # return also n_url for checking how many ads it is on one page
         ads_data, n_urls = download_data(
              query_params = ad_params, 
-             scrape_params = scrape_params, 
+             scrape_params = scrape_params,
+             headers_params = headers_params, 
              page_counter=page_counter)
         
         path_to_save = create_save_data_path(batch = True)
