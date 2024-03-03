@@ -2,7 +2,8 @@ ad_css_class:
   - "css-m97llu e16xl7020"
 
 urls_class:
-  - "css-lsw81o e1dfeild1"
+  # - "css-lsw81o e1dfeild1"
+  - css-16vl3c1 e1njvixn0
 
 # path ad: None
 general_ad_attr:

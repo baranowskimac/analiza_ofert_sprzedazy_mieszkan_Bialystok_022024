@@ -6,8 +6,8 @@ city: "bialystok"
 distance_radius: 50
 price_min:
 price_max:
-page_num: 12
+page_num: 1
 limit: 72 
-sys_sleep: 5
+sys_sleep: 10
 
 

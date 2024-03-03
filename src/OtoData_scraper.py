@@ -44,30 +44,32 @@ def create_list_of_ulrs(soup, scrape_params: dict) -> list:
         
     return list_of_url
 
-def extract_html_page(page_url: str):
+def extract_html_page(page_url: str, headers: dict):
    
     """
     Function to extract all ads from a given page from OtoDom webservice
     Args:
         page_url (str): link to the OtoDom page
+        headers (dict): list of client and the server pass additional information with an HTTP request or response
     
     Returns:
         soup (bs4.BeautifulSoup): bs4.BeautifulSoup object for future downloading data
 
     """
     # parser data from created link
-    page = requests.get(page_url)
+    page = requests.get(page_url, headers=headers)
     # if status is 404 it means that ads params probably are wrong 
     # remember collecting data up to the city level with county law
-    if page.status_code == 404:
+    if page.status_code != 200:
         print(page)
-        raise ValueError("Page dosn't exist. Check params!")
+        raise ValueError("smth wrong!")
     soup = BeautifulSoup(page.content, 'html.parser')
     return soup
 
 def download_data(
         query_params: dict, 
-        scrape_params: dict, 
+        scrape_params: dict,
+        headers_params: dict, 
         page_counter: int
 ) -> Union[list, int]:
     
@@ -77,6 +79,7 @@ def download_data(
     Args:
         query_params (dict):dictionary with params for looking for oto dom ads for scraping
         scraper_config (dict): dictionary with specific scrape params from a oto dom page
+        headers (dict): list of client and the server pass additional information with an HTTP request or response
         page_counter (int): value of the next page 
     
     Returns:
@@ -88,7 +91,7 @@ def download_data(
     # 1st step - create a main page for download  - params of looked apartaments given in config file
     main_page_url = create_link_page_to_download(query_params, page_counter)
     # 2nd step - extrat page for scraping using beautiful soup package
-    page_html = extract_html_page(main_page_url)
+    page_html = extract_html_page(main_page_url, headers=headers_params)
     # 3rd step - create list of url of ads for scraping
     urls = create_list_of_ulrs(page_html, scrape_params)
     # 3a - check how many ads is for scraping. If number of ads is less than minimum defined value in one page
@@ -104,7 +107,7 @@ def download_data(
         one_ad_page = create_ad_page_to_extract(i) 
         print(one_ad_page)
         # using bs package - extract page
-        one_ad_hmlt_extract = extract_html_page(one_ad_page) 
+        one_ad_hmlt_extract = extract_html_page(one_ad_page,  headers=headers_params) 
         # extract ads details from json in page
         json_ad = extract_ad_json(
             add_soup = one_ad_hmlt_extract, 
