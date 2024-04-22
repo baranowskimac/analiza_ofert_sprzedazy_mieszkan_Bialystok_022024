@@ -5,6 +5,5 @@ __pycache__
 .ipynb_checkpoints
 batch/
 full_df/
-*.ipynb
 *.html
 clean_data/
